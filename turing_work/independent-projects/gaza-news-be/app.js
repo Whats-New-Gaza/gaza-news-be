@@ -31,7 +31,7 @@ app.get("/articles", (req, res) => {
       res.status(500).json({ error: "Could not fetch the documents" })
     })
 })
-
+//interface pattern
 //fetch a single article
 app.get("/articles/:id", (req, res) => {
   db.collection("articles")
@@ -57,6 +57,7 @@ app.get("/newsOutlets", (req, res) => {
       res.status(500).json({ error: "Could not fetch the documents" })
     })
 })
+//not a lot of information on single reporters
 app.get("/reporters", (req, res) => {
   let reporters = []
   db.collection("reporters")
@@ -82,4 +83,22 @@ app.get("/users", (req, res) => {
     .catch(() => {
       res.status(500).json({ error: "Could not fetch the documents" })
     })
+})
+
+//fetch a single user
+//if we request an id that is valid but does not exist on the server we will get null back at the moment
+app.get("/users/:id", (req, res) => {
+  if (ObjectId.isValid(req.params.id)) {
+    db.collection("users")
+      .findOne({ _id: new ObjectId(req.params.id) })
+      .then(doc => {
+        res.status(200).json(doc)
+      })
+      .catch(err => {
+        res.status(500).json({ error: "Could not fetch the document" })
+      })
+  } else {
+    res.status(500).json({ error: "Not a valid document id" })
+  }
+
 })

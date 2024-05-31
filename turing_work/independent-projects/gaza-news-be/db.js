@@ -7,6 +7,7 @@ module.exports = {
     MongoClient.connect("mongodb://localhost:27017/gazanews")
       .then((client) => {
         dbConnection = client.db()
+        console.log("dbconnection", dbConnection)
         return callback()
       })
       .catch((err) => {
