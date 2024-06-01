@@ -34,12 +34,16 @@ function transformObject(apiEntry) {
 //work with 4 apis and 4 collections
 function processData() {
   const apiResponse = getData()
+  let newArticleList = []
   apiResponse.articles.map((article) => {
     const articleCreateInput = transformObject(article)
+    newArticleList.push(articleCreateInput)
     //move into function with input of specific api response and reeturns
     //passes in mongo, needs to have all fields
     // db.articles.insertOne(articleCreateInput)
-    db.getDb().articles.create(articleCreateInput)
+    // console.log(db.getDb().collection("articles").find({}).pretty())
+    console.log("test", db.getDb())
+    // .create(articleCreateInput)
   })
 
 }
